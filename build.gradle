@@ -1,0 +1,17 @@
+apply plugin: 'java'
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+repositories {
+	mavenCentral()
+	maven {
+		url "http://repo.bodar.com/"
+	}
+}
+
+dependencies {
+	compile 'com.googlecode.totallylazy:totallylazy:1193'
+
+	testCompile 'junit:junit:4.11'
+}
