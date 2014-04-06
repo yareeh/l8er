@@ -22,14 +22,6 @@ public class TotallyLazy {
 	private static final Callable2<Integer, Integer, Integer> add = sum;
 
 	@Test
-	public void evenTest() {
-		assertFalse(even.matches(7));
-		assertTrue(even.matches(14));
-		assertTrue(odd.matches(7));
-		assertFalse(odd.matches(14));
-	}
-
-	@Test
 	public void examples() {
 		assertThat(sequence(1, 2, 3, 4).filter(even), is(sequence(2, 4)));
 		assertThat(sequence(1, 2).map(toString), is(sequence("1", "2")));
