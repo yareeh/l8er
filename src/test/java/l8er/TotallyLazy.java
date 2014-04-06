@@ -13,10 +13,10 @@ import com.googlecode.totallylazy.Callable2;
 import com.googlecode.totallylazy.Predicate;
 
 public class TotallyLazy {
-	static final Predicate<Integer> even = n -> (n & 1) != 1;
-	static final Predicate<Integer> odd = n -> !even.matches(n);
-	static final Callable2<Integer, Integer, Integer> sum = (n, m) -> n + m;
-	static final Callable2<Integer, Integer, Integer> add = sum;
+	private static final Predicate<Integer> even = n -> (n & 1) != 1;
+	private static final Predicate<Integer> odd = n -> !even.matches(n);
+	private static final Callable2<Integer, Integer, Integer> sum = (n, m) -> n + m;
+	private static final Callable2<Integer, Integer, Integer> add = sum;
 
 	@Test
 	public void examples() {
