@@ -1,7 +1,10 @@
 package l8er;
 
+import static com.googlecode.totallylazy.Option.none;
 import static com.googlecode.totallylazy.Sequences.sequence;
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -48,21 +51,21 @@ public class TotallyLazy {
 
 	@Test
 	public void examples() {
-		sequence(1, 2, 3, 4).filter(even); // lazily returns 2,4
-		sequence(1, 2).map(toString); // lazily returns "1", "2"
-		sequence(1, 2).mapConcurrently(toString); // lazily distributes the work to background threads
-		sequence(1, 2, 3).take(2); // lazily returns 1,2
-		sequence(1, 2, 3).drop(2); // lazily returns 3
-		sequence(1, 2, 3).tail(); // lazily returns 2,3
-		sequence(1, 2, 3).head(); // eagerly returns 1
-		sequence(1, 2, 3).reduce(sum); // eagerly return 6
-		sequence(1, 3, 5).find(even); // eagerly returns none()
-		sequence(1, 2, 3).contains(2); // eagerly returns true
-		sequence(1, 2, 3).exists(even); // eagerly return true
-		sequence(1, 2, 3).forAll(odd); // eagerly returns false;
-		sequence(1, 2, 3).foldLeft(0, add); // eagerly returns 6
-		sequence(1, 2, 3).toString(); // eagerly returns "1,2,3"
-		sequence(1, 2, 3).toString(":"); // eagerly returns "1:2:3"
+		assertThat(sequence(1, 2, 3, 4).filter(even), is(sequence(2, 4)));
+		assertThat(sequence(1, 2).map(toString), is(sequence("1", "2")));
+		assertThat(sequence(1, 2).mapConcurrently(toString), is(sequence("1", "2")));
+		assertThat(sequence(1, 2, 3).take(2), is(sequence(1, 2)));
+		assertThat(sequence(1, 2, 3).drop(2), is(sequence(3)));
+		assertThat(sequence(1, 2, 3).tail(), is(sequence(2, 3)));
+		assertThat(sequence(1, 2, 3).head(), is(1));
+		assertThat(sequence(1, 2, 3).reduce(sum), is(6));
+		assertThat(sequence(1, 3, 5).find(even), is(none()));
+		assertTrue(sequence(1, 2, 3).contains(2));
+		assertTrue(sequence(1, 2, 3).exists(even));
+		assertFalse(sequence(1, 2, 3).forAll(odd));
+		assertThat(sequence(1, 2, 3).foldLeft(0, add), is(6));
+		assertThat(sequence(1, 2, 3).toString(), is("1,2,3"));
+		assertThat(sequence(1, 2, 3).toString(":"), is("1:2:3"));
 
 	}
 }
