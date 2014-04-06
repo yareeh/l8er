@@ -10,6 +10,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.function.BinaryOperator;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 import org.junit.Test;
 
@@ -20,20 +21,20 @@ public class Java8 {
 
 	@Test
 	public void examples() {
-		assertThat(asList(1, 2, 3, 4).stream().filter(even).collect(toList()), is(asList(2, 4)));
-		assertThat(asList(1, 2).stream().map(String::valueOf).collect(toList()), is(asList("1", "2")));
+		assertThat(Stream.of(1, 2, 3, 4).filter(even).collect(toList()), is(asList(2, 4)));
+		assertThat(Stream.of(1, 2).map(String::valueOf).collect(toList()), is(asList("1", "2")));
 		assertThat(asList(1, 2).parallelStream().map(String::valueOf).collect(toList()), is(asList("1", "2")));
-		assertThat(asList(1, 2, 3).stream().limit(2).collect(toList()), is(asList(1, 2)));
-		assertThat(asList(1, 2, 3).stream().skip(2).collect(toList()), is(asList(3)));
-		assertThat(asList(1, 2, 3).stream().skip(1).collect(toList()), is(asList(2, 3)));
-		assertThat(asList(1, 2, 3).stream().limit(1).collect(toList()), is(asList(1)));
-		assertThat(asList(1, 2, 3).stream().reduce(sum).get(), is(6));
-		assertThat(asList(1, 3, 5).stream().filter(even).collect(toList()), is(asList()));
-		assertTrue(asList(1, 2, 3).stream().anyMatch(n -> n == 2));
-		assertTrue(asList(1, 2, 3).stream().anyMatch(even));
-		assertFalse(asList(1, 2, 3).stream().allMatch(odd));
-		assertThat(asList(1, 2, 3).stream().reduce(0, sum), is(6));
-		assertThat(asList(1, 2, 3).stream().map(String::valueOf).collect(joining(",")), is("1,2,3"));
-		assertThat(asList(1, 2, 3).stream().map(String::valueOf).collect(joining(":")), is("1:2:3"));
+		assertThat(Stream.of(1, 2, 3).limit(2).collect(toList()), is(asList(1, 2)));
+		assertThat(Stream.of(1, 2, 3).skip(2).collect(toList()), is(asList(3)));
+		assertThat(Stream.of(1, 2, 3).skip(1).collect(toList()), is(asList(2, 3)));
+		assertThat(Stream.of(1, 2, 3).limit(1).collect(toList()), is(asList(1)));
+		assertThat(Stream.of(1, 2, 3).reduce(sum).get(), is(6));
+		assertThat(Stream.of(1, 3, 5).filter(even).collect(toList()), is(asList()));
+		assertTrue(Stream.of(1, 2, 3).anyMatch(n -> n == 2));
+		assertTrue(Stream.of(1, 2, 3).anyMatch(even));
+		assertFalse(Stream.of(1, 2, 3).allMatch(odd));
+		assertThat(Stream.of(1, 2, 3).reduce(0, sum), is(6));
+		assertThat(Stream.of(1, 2, 3).map(String::valueOf).collect(joining(",")), is("1,2,3"));
+		assertThat(Stream.of(1, 2, 3).map(String::valueOf).collect(joining(":")), is("1:2:3"));
 	}
 }
