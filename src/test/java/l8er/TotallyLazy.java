@@ -15,30 +15,10 @@ import com.googlecode.totallylazy.Predicate;
 
 public class TotallyLazy {
 
-	private static final Predicate<Integer> even = new Predicate<Integer>() {
-		@Override public boolean matches(final Integer n) {
-			return (n & 1) != 1;
-		}
-	};
-
-	private static final Predicate<Integer> odd = new Predicate<Integer>() {
-		@Override public boolean matches(final Integer n) {
-			return !even.matches(n);
-		}
-	};
-
-	private static final Callable1<Integer, String> toString = new Callable1<Integer, String>() {
-		@Override public String call(final Integer n) throws Exception {
-			return String.valueOf(n);
-		}
-	};
-
-	private static final Callable2<Integer, Integer, Integer> sum = new Callable2<Integer, Integer, Integer>() {
-		@Override public Integer call(final Integer n, final Integer m) throws Exception {
-			return n + m;
-		}
-	};
-
+	private static final Predicate<Integer> even = n -> (n & 1) != 1;
+	private static final Predicate<Integer> odd = n -> !even.matches(n);
+	private static final Callable1<Integer, String> toString = String::valueOf;
+	private static final Callable2<Integer, Integer, Integer> sum = (n, m) -> n + m;
 	private static final Callable2<Integer, Integer, Integer> add = sum;
 
 	@Test
