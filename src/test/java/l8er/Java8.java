@@ -47,6 +47,7 @@ public class Java8 {
 		assertThat(Stream.of(asList(1, 2), asList(3, 4)).flatMap(a -> a.stream()).collect(toList()), is(asList(1, 2, 3, 4)));
 		assertThat(Stream.iterate(1, n -> n + 1).limit(3).collect(toList()), is(asList(1, 2, 3)));
 		assertThat(Stream.generate(() -> "car").limit(3).collect(toList()), is(asList("car", "car", "car")));
+		assertThat(Stream.concat(Stream.of(1, 2), Stream.of(3, 4)).collect(toList()), is(asList(1, 2, 3, 4)));
 	}
 
 	@Test
@@ -71,5 +72,6 @@ public class Java8 {
 		Stream.of(asList(1, 2), asList(3, 4)).flatMap(a -> a.stream()); // returns 1, 2, 3, 4
 		Stream.iterate(1, n -> n + 1); // returns 1, 2, 3, ...
 		Stream.generate(() -> "car"); // lazily returns an infinite sequence of "car"s
+		Stream.concat(Stream.of(1, 2), Stream.of(3, 4)); // returns 1, 2, 3, 4
 	}
 }
