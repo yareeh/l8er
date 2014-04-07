@@ -43,6 +43,7 @@ public class Java8 {
 				.collect(toMap(a -> a.get(0), a -> a.get(1)));
 		assertThat(map.keySet(), hasItems(1, 3));
 		assertThat(map.values(), hasItems(2, 4));
+		assertThat(Stream.of(asList(1, 2), asList(3, 4)).flatMap(a -> a.stream()).collect(toList()), is(asList(1, 2, 3, 4)));
 	}
 
 	@Test
@@ -63,5 +64,6 @@ public class Java8 {
 		Stream.of(1, 2, 3).map(String::valueOf).collect(joining(",")); // returns "1,2,3"
 		Stream.of(1, 2, 3).map(String::valueOf).collect(joining(":")); // returns "1:2:3"
 		Stream.of(asList(1, 2), asList(3, 4)).collect(toMap(a -> a.get(0), a -> a.get(1))); // returns map where 1 -> 2, 3 -> 4
+		Stream.of(asList(1, 2), asList(3, 4)).flatMap(a -> a.stream()); // returns 1, 2, 3, 4
 	}
 }
