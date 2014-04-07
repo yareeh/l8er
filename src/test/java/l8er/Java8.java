@@ -4,6 +4,9 @@ import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Stream.concat;
+import static java.util.stream.Stream.generate;
+import static java.util.stream.Stream.iterate;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsCollectionContaining.hasItems;
 import static org.junit.Assert.assertFalse;
@@ -40,15 +43,14 @@ public class Java8 {
 		assertThat(Stream.of(1, 2, 3).reduce(0, sum), is(6));
 		assertThat(Stream.of(1, 2, 3).map(String::valueOf).collect(joining(",")), is("1,2,3"));
 		assertThat(Stream.of(1, 2, 3).map(String::valueOf).collect(joining(":")), is("1:2:3"));
-		final Map<Integer, Integer> map = Stream.of(asList(1, 2), asList(3, 4))
-				.collect(toMap(a -> a.get(0), a -> a.get(1)));
+		final Map<Integer, Integer> map = Stream.of(asList(1, 2), asList(3, 4)).collect(toMap(a -> a.get(0), a -> a.get(1)));
 		assertThat(map.keySet(), hasItems(1, 3));
 		assertThat(map.values(), hasItems(2, 4));
 		assertThat(Stream.of(asList(1, 2), asList(3, 4)).flatMap(a -> a.stream()).collect(toList()), is(asList(1, 2, 3, 4)));
-		assertThat(Stream.iterate(1, n -> n + 1).limit(3).collect(toList()), is(asList(1, 2, 3)));
-		assertThat(Stream.generate(() -> "car").limit(3).collect(toList()), is(asList("car", "car", "car")));
-		assertThat(Stream.concat(Stream.of(1, 2), Stream.of(3, 4)).collect(toList()), is(asList(1, 2, 3, 4)));
 		assertThat(Stream.of(1, 2, 2, 3).distinct().collect(toList()), is(asList(1, 2, 3)));
+		assertThat(iterate(1, n -> n + 1).limit(3).collect(toList()), is(asList(1, 2, 3)));
+		assertThat(generate(() -> "car").limit(3).collect(toList()), is(asList("car", "car", "car")));
+		assertThat(concat(Stream.of(1, 2), Stream.of(3, 4)).collect(toList()), is(asList(1, 2, 3, 4)));
 	}
 
 	@Test
@@ -71,9 +73,9 @@ public class Java8 {
 		Stream.of(1, 2, 3).map(String::valueOf).collect(joining(":")); // returns "1:2:3"
 		Stream.of(asList(1, 2), asList(3, 4)).collect(toMap(a -> a.get(0), a -> a.get(1))); // returns map where 1 -> 2, 3 -> 4
 		Stream.of(asList(1, 2), asList(3, 4)).flatMap(a -> a.stream()); // returns 1, 2, 3, 4
-		Stream.iterate(1, n -> n + 1); // returns 1, 2, 3, ...
-		Stream.generate(() -> "car"); // lazily returns an infinite sequence of "car"s
-		Stream.concat(Stream.of(1, 2), Stream.of(3, 4)); // returns 1, 2, 3, 4
 		Stream.of(1, 2, 2, 3).distinct(); // returns 1, 2, 3
+		iterate(1, n -> n + 1); // returns 1, 2, 3, ...
+		generate(() -> "car"); // lazily returns an infinite sequence of "car"s
+		concat(Stream.of(1, 2), Stream.of(3, 4)); // returns 1, 2, 3, 4
 	}
 }
