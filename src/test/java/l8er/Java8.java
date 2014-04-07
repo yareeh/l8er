@@ -36,6 +36,7 @@ public class Java8 {
 		assertTrue(Stream.of(1, 2, 3).anyMatch(n -> n == 2));
 		assertTrue(Stream.of(1, 2, 3).anyMatch(even));
 		assertFalse(Stream.of(1, 2, 3).allMatch(odd));
+		assertFalse(Stream.of(1, 2, 3).noneMatch(odd));
 		assertThat(Stream.of(1, 2, 3).reduce(0, sum), is(6));
 		assertThat(Stream.of(1, 2, 3).map(String::valueOf).collect(joining(",")), is("1,2,3"));
 		assertThat(Stream.of(1, 2, 3).map(String::valueOf).collect(joining(":")), is("1:2:3"));
@@ -62,6 +63,7 @@ public class Java8 {
 		Stream.of(1, 2, 3).anyMatch(n -> n == 2); // returns true
 		Stream.of(1, 2, 3).anyMatch(even); // returns true
 		Stream.of(1, 2, 3).allMatch(odd); // returns false
+		Stream.of(1, 2, 3).noneMatch(odd); // returns false
 		Stream.of(1, 2, 3).reduce(0, sum); // returns 6
 		Stream.of(1, 2, 3).map(String::valueOf).collect(joining(",")); // returns "1,2,3"
 		Stream.of(1, 2, 3).map(String::valueOf).collect(joining(":")); // returns "1:2:3"
